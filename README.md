@@ -4,7 +4,7 @@
 
 Se planteó el siguiente flujo para la función mdLinks
 
-![DFD](https://i.ibb.co/PYqTs0T/flujo.jpg)
+![DFD](https://i.ibb.co/xDr9Smh/DFD.jpg)
 
 
 ## Pseudocodigo
