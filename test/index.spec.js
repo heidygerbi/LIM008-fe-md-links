@@ -1,3 +1,4 @@
+let paths = require('path');
 import {
     evaluatePath,
     transformToAbsPath,
@@ -14,37 +15,47 @@ import {
     addVerification
 } from '../src/models/validate.js';
 import {calculateStats} from '../src/models/stats.js';
-
-const inputTrue = 'C:/rutaAbsoluta/archivo.md'; 
-const inputFalse = '../rutaRelativa/archivo.md';
+const inputPathAbs = 'C:/Users/Usuario/Desktop/src/models/stats.js';
+const inputPathAbsWin = paths.normalize(inputPathAbs);
+const inputPathAbsDir = 'C:/Users/Usuario/Desktop/src/models'; 
+const inputPathRelative = '../src/models/stats.js';
 describe('evaluatePath', () => {
     it('debería ser una función', () => {
         expect(typeof evaluatePath).toBe('function');
     });
     it('debería retornar un valor booleano', () => {
-        expect(evaluatePath(inputTrue)).browser;
+        expect(evaluatePath(inputPathAbs)).browser;
     });
-    // it('debería retornar true con inputTrue', () => {
-    //     expect(evaluatePath(inputTrue)).toEqual(true);
-    // });
-    // it('debería retornar false con inputFalse', () => {
-    //     expect(evaluatePath(inputFalse)).toEqual(false);
-    // });    
+    it('debería retornar true con inputPathAbs', () => {
+        expect(evaluatePath(inputPathAbs)).toEqual(true);
+    });
+    it('debería retornar false con inputPathRelative', () => {
+        expect(evaluatePath(inputPathRelative)).toEqual(false);
+    });
 });
 describe('transformToAbsPath', () => {
     it('debería ser una función', () => {
         expect(typeof transformToAbsPath).toBe('function');
     });
     it('debería retornar un valor string', () => {
-        expect(typeof transformToAbsPath(inputTrue)).toBe('string');
+        expect(typeof transformToAbsPath(inputPathRelative)).toBe('string');
     });
+    it('debería retornar  ruta absoluta a partir de ruta relativa', () => {
+        expect(transformToAbsPath(inputPathRelative)).toEqual(inputPathAbsWin);
+    });    
 });
 describe('recognizeIfIsFile', () => {
     it('debería ser una función', () => {
         expect(typeof recognizeIfIsFile).toBe('function');
     });
     it('debería retornar un valor booleano', () => {
-        expect(recognizeIfIsFile(inputTrue)).browser;
+        expect(recognizeIfIsFile(inputPathAbs)).browser;
+    });
+    it('debería retornar true con inputPathAbs', () => {
+        expect(recognizeIfIsFile(inputPathAbs)).toEqual(true);
+    });
+    it('debería retornar false con inputPathAbsDir', () => {
+        expect(recognizeIfIsFile(inputPathAbsDir)).toEqual(false);
     });
  });
  describe('getFiles', () => {
@@ -52,7 +63,7 @@ describe('recognizeIfIsFile', () => {
         expect(typeof getFiles).toBe('function');
     });
     it('debería retornar un array', () => {
-        expect(typeof getFiles(inputTrue)).toBe('object');
+        expect(typeof getFiles(inputPathAbs)).toBe('object');
     });
  });
  
@@ -61,7 +72,7 @@ describe('recognizeIfIsFile', () => {
         expect(typeof getMDContent).toBe('function');
     });
     it('debería retornar un valor string', () => {
-        expect(typeof getMDContent(inputTrue)).toBe('string');
+        expect(typeof getMDContent(inputPathAbs)).toBe('string');
     });
 });
 describe('convertMDToHtml', () => {
