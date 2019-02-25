@@ -14,7 +14,7 @@ import {
     addVerification
 } from '../src/models/validate.js';
 import {calculateStats} from '../src/models/stats.js';
-const mdLinks = (path, options) =>{
+export const mdLinks = (path, options) =>{
     evaluatePath(path);
     transformToAbsPath(path);
     recognizeIfIsFile(pathAbs);
