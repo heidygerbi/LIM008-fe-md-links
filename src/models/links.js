@@ -1,16 +1,23 @@
+let paths = require('path');
+let fs = require('fs');
+
 export const evaluatePath = (path) => {
-    if (path.isAbsolute) return true;
-    else return false;    
+   if(paths.isAbsolute(path)) return true;
+   else return false;    
 };
-export const transformToAbsPath = (path) => {
-    const pathRelative = path;
-    const pathAbs= 'C:/rutaAbsoluta/archivo.md';
-    return pathAbs;
-};
-export const recognizeIfIsFile = (pathAbs) => {
-    if (pathAbs) return true;
-    else return false;
-};
+
+export const transformToAbsPath = (path) => paths.resolve(path);
+// export 
+// const recognizeIfIsFile = (pathAbs) => {
+//     console.log(fs.lstat.isFile());
+//     // if (fs.lstat.isFile(pathAbs)) return true;
+//     // else return false;
+// };  
+// const inputPathAbs = 'C:/Users/Usuario/Desktop/src/models/stats.js';
+// const inputPathAbsDir = 'C:/Users/Usuario/Desktop/src/models';   
+// console.log(recognizeIfIsFile(inputPathAbs));
+// console.log(transformToAbsPath('../../test'));
+
 export const getFiles = (pathAbs) => {
     if (pathAbs) {
         const arrPath = ['ruta1','ruta2'];
@@ -40,12 +47,5 @@ export const extractATagAttr = (contHTML) => {
     }
 };
 export const createArrLinkObj = (objInfLinks) => {
-    if (objInfLinks) {
-        const arrObjInfLinks = [{
-            href:'link',
-            text:'text',
-            file:'path'
-        }];
-        return arrObjInfLinks;
-    }
+    if (objInfLinks) return [{href:'link',text:'text',file:'path'}];
 };
