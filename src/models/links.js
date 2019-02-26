@@ -1,22 +1,10 @@
 let paths = require('path');
 let fs = require('fs');
-
-export const evaluatePath = (path) => {
-   if(paths.isAbsolute(path)) return true;
-   else return false;    
-};
-
+export const evaluatePath = (path) => paths.isAbsolute(path);
+// console.log('evaluatePath: ' + evaluatePath('C:/Users/heidy/Desktop/LIM008-fe-md-links/src/index.js'))
 export const transformToAbsPath = (path) => paths.resolve(path);
-// export 
-// const recognizeIfIsFile = (pathAbs) => {
-//     console.log(fs.lstat.isFile());
-//     // if (fs.lstat.isFile(pathAbs)) return true;
-//     // else return false;
-// };  
-// const inputPathAbs = 'C:/Users/Usuario/Desktop/src/models/stats.js';
-// const inputPathAbsDir = 'C:/Users/Usuario/Desktop/src/models';   
-// console.log(recognizeIfIsFile(inputPathAbs));
-// console.log(transformToAbsPath('../../test'));
+// console.log('transformToAbsPath: ' + transformToAbsPath('../index.js'))
+export const recognizeIfIsFile = (pathAbs) => fs.statSync(pathAbs).isFile();
 
 export const getFiles = (pathAbs) => {
     if (pathAbs) {
