@@ -3,11 +3,11 @@ import {
     evaluatePath,
     transformToAbsPath,
     recognizeIfIsFile,
-    getFiles,
     getMDContent,
     convertMDToHtml,
     extractATagAttr,
-    createArrLinkObj
+    createArrLinkObj,
+    validateExtMD
 } from '../src/models/links.js';
 import {
     extractHref,
@@ -15,10 +15,9 @@ import {
     addVerification
 } from '../src/models/validate.js';
 import {calculateStats} from '../src/models/stats.js';
-const inputPathAbs = 'C:/Users/Usuario/Desktop/src/models/stats.js';
-const inputPathAbsWin = paths.normalize(inputPathAbs);
-const inputPathAbsDir = 'C:/Users/Usuario/Desktop/src/models'; 
-const inputPathRelative = '../src/models/stats.js';
+const inputPathAbs = paths.normalize(`${__dirname}/testDir/a/a1/a1.md`);
+const inputPathAbsDir = `${__dirname}/testDir/a/a1/`; 
+const inputPathRelative = './test/testDir/a/a1/a1.md';
 describe('evaluatePath', () => {
     it('debería ser una función', () => {
         expect(typeof evaluatePath).toBe('function');
@@ -41,7 +40,7 @@ describe('transformToAbsPath', () => {
         expect(typeof transformToAbsPath(inputPathRelative)).toBe('string');
     });
     it('debería retornar  ruta absoluta a partir de ruta relativa', () => {
-        expect(transformToAbsPath(inputPathRelative)).toEqual(inputPathAbsWin);
+        expect(transformToAbsPath(inputPathRelative)).toBe(inputPathAbs);
     });    
 });
 describe('recognizeIfIsFile', () => {
@@ -58,12 +57,15 @@ describe('recognizeIfIsFile', () => {
         expect(recognizeIfIsFile(inputPathAbsDir)).toEqual(false);
     });
  });
- describe('getFiles', () => {
+ describe('validateExtMD', () => {
     it('debería ser una función', () => {
-        expect(typeof getFiles).toBe('function');
+        expect(typeof validateExtMD).toBe('function');
     });
-    it('debería retornar un array', () => {
-        expect(typeof getFiles(inputPathAbs)).toBe('object');
+    it('debería retornar un string', () => {
+        expect(typeof validateExtMD(inputPathAbs)).toBe('string');
+    });
+    it('debería retornar .md', () => {
+        expect(validateExtMD(inputPathAbs)).toBe('.md');
     });
  });
  
@@ -74,6 +76,9 @@ describe('recognizeIfIsFile', () => {
     it('debería retornar un valor string', () => {
         expect(typeof getMDContent(inputPathAbs)).toBe('string');
     });
+    it('debería retornar el contenido de archivo .md', () => {
+        expect(getMDContent(inputPathAbs)).toBe('[GitHub](http://github.com)');
+    });
 });
 describe('convertMDToHtml', () => {
     it('debería ser una función', () => {
@@ -82,13 +87,19 @@ describe('convertMDToHtml', () => {
     it('debería retornar un valor string', () => {
         expect(typeof convertMDToHtml('contenido MD')).toBe('string');
     });
+    it('debería retornar un html a base de un md', () => {
+            expect(convertMDToHtml('[GitHub](http://github.com)')).toBe('<p><a href="http://github.com">GitHub</a></p>' + '\n');
+    });
 });
 describe('extractATagAttr', () => {
     it('debería ser una función', () => {
         expect(typeof extractATagAttr).toBe('function');
     });
     it('debería retornar un objeto', () => {
-        expect(typeof extractATagAttr('contenido HTML')).toBe('object');
+        expect(typeof extractATagAttr('<a href="http://github.com">texto de ruta</a>')).toBe('object');
+    });
+    it('debería retornar un objeto a base de un html', () => {
+        expect(extractATagAttr('<a href="http://github.com">texto de ruta</a>', 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js')).toEqual({href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js'});
     });
 });
 describe('createArrLinkObj', () => {
@@ -98,13 +109,16 @@ describe('createArrLinkObj', () => {
     it('debería retornar un array', () => {
         expect(typeof createArrLinkObj({href:'link', text:'text', file:'path'})).toBe('object');
     });
+    it('debería retornar un array con objetos', () => {
+        expect(createArrLinkObj({href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js'})).toEqual([{href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js'}]);
+    });
 });
 describe('extractHref', () => {
     it('debería ser una función', () => {
         expect(typeof extractHref).toBe('function');
     });
     it('debería retornar un array', () => {
-        expect(typeof extractHref([{href:'link', text:'text', file:'path'}])).toBe('object');
+        expect(typeof extractHref([{href: 'link', text: 'text', file: 'path'}])).toBe('object');
     });
 });
 describe('verifyLink', () => {
@@ -128,8 +142,6 @@ describe('calculateStats', () => {
         expect(typeof calculateStats).toBe('function');
     });
     it('debería retornar un array', () => {
-        expect(typeof calculateStats(
-            [{href:'link', text:'text', file:'path'}]
-        )).toBe('object');
+        expect(typeof calculateStats([{href: 'link', text: 'text', file: 'path'}])).toBe('object');
     });
 });
