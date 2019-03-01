@@ -119,10 +119,10 @@ describe('getFile', () => {
     expect(typeof getFile).toBe('function');
   });
   it('debería retornar un array', () => {
-    expect(typeof getFile('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir')).toBe('object');
+    expect(typeof getFile('C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir')).toBe('object');
   });
   it('debería imprimir contenido de la ruta dada', () => {
-    expect(getFile('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir')).toBe([paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a11.md'), paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1.md')]);
+    expect(getFile('C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir')).toEqual([paths.normalize(paths.normalize('C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a1.md'), 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a11.md')]);
   });
 });
 describe('extractHref', () => {

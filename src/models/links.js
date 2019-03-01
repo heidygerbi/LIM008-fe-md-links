@@ -4,8 +4,7 @@ import marked from 'marked';
 import jsdom from 'jsdom';
 import { stringify } from 'querystring';
 const { JSDOM } = jsdom;
-let pathEachChildrenFile = [];
-let pathEachChildren = [];
+
 export const evaluatePath = (path) => paths.isAbsolute(path);
 // console.log(`evaluatePath: ${evaluatePath('C:/Users/heidy/Desktop/LIM008-fe-md-links/src/index.js')}`)
 export const transformToAbsPath = (path) => paths.resolve(path);
@@ -38,19 +37,33 @@ export const createArrLinkObj = (objInfLinks) => {
   arrObjInfLinks.push(objInfLinks);
   return arrObjInfLinks;
 };
+// export const getFile = (path) => {
+//   const contentPath = fs.readdirSync(path);
+//   let result = [];
+//   contentPath.forEach((element) => {
+//     console.log('est es pathEachChildren: ' + pathEachChildren.push(paths.normalize(path + '/' + element)));
+//     pathEachChildren.forEach((ele) => {
+//       // result = fs.statSync(ele).isFile() 
+//       // ? pathEachChildrenFile.push(ele) 
+//       // : getFile(ele);
+//       if (fs.statSync(ele).isFile()) {
+//         pathEachChildrenFile.push(ele);
+//         result = pathEachChildrenFile;
+//       } else result = getFile(ele);
+//     });
+//   });
+//   return result;
+// };
 export const getFile = (path) => {
+  let pathEachChildrenFile = [];
+  let pathEachChildren = [];
   const ContentPath = fs.readdirSync(path);
-  // console.log(ContentPath); // esto retorna un array con string, siendo los strings los hijos encontrados
   for (let i = 0; i < ContentPath.length; i++) 
     pathEachChildren[i] = paths.normalize(path + '/' + ContentPath[i]);
-  // console.log(pathEachChildren);
-  // return fs.statSync(pathEachChildren).isFile()
-  // ? pathEachChildrenFile.push(pathEachChildren)
-  // : getFile(pathEachChildren);
   for (let j = 0; j < pathEachChildren.length; j++) {  
     if (fs.statSync(pathEachChildren[j]).isFile()) {
       pathEachChildrenFile.push(pathEachChildren[j]);
       return pathEachChildrenFile;
-    } else getFile(pathEachChildren[j]);
+    } else return getFile(pathEachChildren[j]);
   }
 };
