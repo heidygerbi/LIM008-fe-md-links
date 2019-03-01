@@ -2,7 +2,10 @@ import paths from 'path';
 import fs from 'fs';
 import marked from 'marked';
 import jsdom from 'jsdom';
+import { stringify } from 'querystring';
 const { JSDOM } = jsdom;
+let pathEachChildrenFile = [];
+let pathEachChildren = [];
 export const evaluatePath = (path) => paths.isAbsolute(path);
 // console.log(`evaluatePath: ${evaluatePath('C:/Users/heidy/Desktop/LIM008-fe-md-links/src/index.js')}`)
 export const transformToAbsPath = (path) => paths.resolve(path);
@@ -35,21 +38,19 @@ export const createArrLinkObj = (objInfLinks) => {
   arrObjInfLinks.push(objInfLinks);
   return arrObjInfLinks;
 };
-export const openFile = (path) => {
+export const getFile = (path) => {
   const ContentPath = fs.readdirSync(path);
-  console.log(ContentPath);
-  // const pathEachChildrenFile = [];
-  // let pathEachChildren = [];
-  // for (let i = 0; i < ContentPath.length; i++) 
-  //   pathEachChildren[i] = paths.normalize(path + '/' + ContentPath[i]);
-  //   console.log(pathEachChildren);
+  // console.log(ContentPath); // esto retorna un array con string, siendo los strings los hijos encontrados
+  for (let i = 0; i < ContentPath.length; i++) 
+    pathEachChildren[i] = paths.normalize(path + '/' + ContentPath[i]);
+  // console.log(pathEachChildren);
   // return fs.statSync(pathEachChildren).isFile()
   // ? pathEachChildrenFile.push(pathEachChildren)
-  // : openFile(pathEachChildren);
-  // for (let j = 0; j < pathEachChildren.length; j++) {  
-  //   if (fs.statSync(pathEachChildren[j]).isFile()) {
-  //     pathEachChildrenFile.push(pathEachChildren[j]);
-  //     return pathEachChildrenFile;
-  //   } else openFile(pathEachChildren[j]);
-  // }
+  // : getFile(pathEachChildren);
+  for (let j = 0; j < pathEachChildren.length; j++) {  
+    if (fs.statSync(pathEachChildren[j]).isFile()) {
+      pathEachChildrenFile.push(pathEachChildren[j]);
+      return pathEachChildrenFile;
+    } else getFile(pathEachChildren[j]);
+  }
 };

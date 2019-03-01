@@ -8,7 +8,7 @@ import {
   extractATagAttr,
   createArrLinkObj,
   validateExtMD,
-  openFile
+  getFile
 } from '../src/models/links.js';
 import {
   extractHref,
@@ -100,7 +100,7 @@ describe('extractATagAttr', () => {
     expect(typeof extractATagAttr('<a href="http://github.com">texto de ruta</a>')).toBe('object');
   });
   it('debería retornar un objeto a base de un html', () => {
-    expect(extractATagAttr('<a href="http://github.com">texto de ruta</a>', 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/index.spec.js')).toEqual({ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/index.spec.js' });
+    expect(extractATagAttr('<a href="http://github.com">texto de ruta</a>', 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js')).toEqual({ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js' });
   });
 });
 describe('createArrLinkObj', () => {
@@ -111,18 +111,18 @@ describe('createArrLinkObj', () => {
     expect(typeof createArrLinkObj({ href: 'link', text: 'text', file: 'path' })).toBe('object');
   });
   it('debería retornar un array con objetos', () => {
-    expect(createArrLinkObj({ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/index.spec.js' })).toEqual([{ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/index.spec.js' }]);
+    expect(createArrLinkObj({ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js' })).toEqual([{ href: 'http://github.com/', text: 'texto de ruta', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js' }]);
   });
 });
-describe('openFile', () => {
+describe('getFile', () => {
   it('debería ser una función', () => {
-    expect(typeof openFile).toBe('function');
+    expect(typeof getFile).toBe('function');
   });
   it('debería retornar un array', () => {
-    expect(typeof openFile(['pathFile', 'pathFile', 'pathFile'])).toBe('object');
+    expect(typeof getFile('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir')).toBe('object');
   });
   it('debería imprimir contenido de la ruta dada', () => {
-    expect(openFile('C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir')).toBe(['C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir/a', 'C:/Users/Heidy/Desktop/LIM008-fe-md-links/test/testDir/b']);
+    expect(getFile('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir')).toBe([paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a11.md'), paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1.md')]);
   });
 });
 describe('extractHref', () => {
