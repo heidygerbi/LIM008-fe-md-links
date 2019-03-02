@@ -2,7 +2,7 @@ import paths from 'path';
 import fs from 'fs';
 import marked from 'marked';
 import jsdom from 'jsdom';
-import { stringify } from 'querystring';
+// import { stringify } from 'querystring';
 const { JSDOM } = jsdom;
 
 export const evaluatePath = (path) => paths.isAbsolute(path);
