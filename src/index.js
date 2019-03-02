@@ -1,29 +1,31 @@
 import {
-    evaluatePath,
-    transformToAbsPath,
-    recognizeIfIsFile,
-    getFiles,
-    getMDContent,
-    convertMDToHtml,
-    extractATagAttr,
-    createArrLinkObj,
+  evaluatePath,
+  transformToAbsPath,
+  recognizeIfIsFile,
+  getMDContent,
+  convertMDToHtml,
+  extractATagAttr,
+  createArrLinkObj,
+  validateExtMD,
+  getFile
 } from './models/links.js';
 import {
-    extractHref,
-    verifyLink,
-    addVerification
+  extractHref,
+  verifyLink,
+  addVerification
 } from '../src/models/validate.js';
-import {calculateStats} from '../src/models/stats.js';
-export const mdLinks = (path, options) =>{
-    evaluatePath(path);
-    transformToAbsPath(path);
-    recognizeIfIsFile(pathAbs);
-    getFiles(pathAbs);
-    convertMDToHtml(contMD);
-    extractATagAttr(contHTML);
-    createArrLinkObj(objInfLinks);
-    extractHref(arrObjInfLinks);
-    verifyLink(arrHref);
-    addVerification(arrStatus);
-    calculateStats(arrObjComplet);
+import { calculateStats } from '../src/models/stats.js';
+export const mdLinks = (path, options) => {
+  let pathAbs = path;
+  let contHTML = '';
+  let objInfLinks;
+  if (!evaluatePath(path)) pathAbs = transformToAbsPath(path);
+  if (recognizeIfIsFile(pathAbs)) {
+    if (validateExtMD(pathAbs)) {
+      contHTML = convertMDToHtml(getMDContent(pathAbs));
+      extractATagAttr(contHTML);
+      objInfLinks = getObjInfLinks();
+    }
+  }
+  return objInfLinks;
 };
