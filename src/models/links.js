@@ -1,51 +1,62 @@
-export const evaluatePath = (path) => {
-    if (path.isAbsolute) return true;
-    else return false;    
+import paths from 'path';
+import fs from 'fs';
+import marked from 'marked';
+import jsdom from 'jsdom';
+const { JSDOM } = jsdom;
+
+export const evaluatePath = (path) => paths.isAbsolute(path);
+
+export const transformToAbsPath = (path) => paths.resolve(path);
+// `${process.cwd(path)}/${paths.basename(path)}`; 
+
+export const recognizeIfIsFile = (pathAbs) => fs.statSync(pathAbs).isFile();
+
+export const validateExtMD = (pathAbs) => paths.extname(pathAbs);
+
+export const getMDContent = (pathAbs) => fs.readFileSync(pathAbs, 'utf8');
+
+export const convertMDToHtml = (contMD) => marked(contMD);
+
+export const extractATagAttr = (contHTML, pathAbs) => {
+  const dom = new JSDOM(contHTML);
+  let objInfLinks = {};
+  let arrObjInfLinks = [];
+  const text = dom.window.document.querySelectorAll('a');
+  for (let tagA of text) {
+    objInfLinks = {
+      href: tagA.href,
+      text: tagA.textContent,
+      file: pathAbs
+    };
+    arrObjInfLinks.push(objInfLinks);
+  }
+  return arrObjInfLinks;
 };
-export const transformToAbsPath = (path) => {
-    const pathRelative = path;
-    const pathAbs= 'C:/rutaAbsoluta/archivo.md';
-    return pathAbs;
+
+
+export const getFile = (path) => {
+  let result = [];
+  let pathEachChildrenFile = [];
+  let pathEachChildren = [];
+  const contentPath = fs.readdirSync(path);
+  contentPath.forEach(ele => pathEachChildren.push(paths.normalize(path + '/' + ele)));
+  if (pathEachChildren.length > 0) {
+    pathEachChildren.forEach(element => {
+      if (fs.statSync(element).isFile()) {
+        if (element !== '') pathEachChildrenFile.push(element);
+        result = result.concat(pathEachChildrenFile);
+      } else result = result.concat(getFile(element));
+    });
+  }
+  return result;
 };
-export const recognizeIfIsFile = (pathAbs) => {
-    if (pathAbs) return true;
-    else return false;
-};
-export const getFiles = (pathAbs) => {
-    if (pathAbs) {
-        const arrPath = ['ruta1','ruta2'];
-        return arrPath;
-    }
-};
-export const getMDContent = (pathAbs) => {
-    if (pathAbs) {
-        const contMD = 'contenido MD';
-        return contMD;
-    }
-};
-export const convertMDToHtml = (contMD) => {
-    if (contMD) {
-        const contHTML = 'contenido HTML';
-        return contHTML;
-    }
-};
-export const extractATagAttr = (contHTML) => {
-    if (contHTML) {
-        const objInfLinks = {
-            href:'link',
-            text:'text',
-            file:'path'
-        };
-        return objInfLinks;
-    }
-};
-export const createArrLinkObj = (objInfLinks) => {
-    if (objInfLinks) {
-        const arrObjInfLinks = [{
-            href:'link',
-            text:'text',
-            file:'path'
-        }];
-        return arrObjInfLinks;
-    }
-};
+
+  // arrObjAllInfLinks.push(arrObjInfLinks);
+  // const arrObjAllInfLinks = [];
+  // for (let i = 0; i < arrObjInfLinks.length; i++) {
+  //   console.log(`esto es element: ${arrObjInfLinks[i]}`);
+  //   arrObjAllInfLinks.push(arrObjInfLinks[i]);
+  // } 
+
+//   return arrObjAllInfLinks;
+// };
