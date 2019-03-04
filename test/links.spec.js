@@ -6,7 +6,6 @@ import {
   getMDContent,
   convertMDToHtml,
   extractATagAttr,
-  unifyArrLinkObj,
   validateExtMD,
   getFile
 } from '../src/models/links.js';
@@ -113,14 +112,14 @@ describe('getFile', () => {
   });
   it('debería retornar un array', () => {
     expect(typeof getFile(
-      'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir'))
+      `${__dirname}/testDir`))
       .toBe('object');
   });
   it('debería imprimir contenido de la ruta dada', () => {
     expect(getFile(
-      'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir'))
-      .toEqual([paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a1.md'), 
-        paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/a/a1/a11/a11.md'),
-        paths.normalize('C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/testDir/b/a11.md')]);
+      `${__dirname}/testDir`))
+      .toEqual([paths.normalize(`${__dirname}/testDir/a/a1/a1.md`), 
+        paths.normalize(`${__dirname}/testDir/a/a1/a11/a11.md`),
+        paths.normalize(`${__dirname}/testDir/b/a11.md`)]);
   });
 });
