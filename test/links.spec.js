@@ -104,6 +104,9 @@ describe('extractATagAttr', () => {
   it('debería retornar un array de objeto a base de un archivo html (1 objeto)', () => {
     expect(extractATagAttr('<a href="http://github1.com">texto de ruta 1</a>', 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js')).toEqual([ { href: 'http://github1.com/', text: 'texto de ruta 1', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js'}]);
   });
+  it('debería recortar el text a 50 caract', () => {
+    expect(extractATagAttr('<a href="http://github.com">texto de rutatexto de rutatexto de rutatexto de ruta</a>', 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js')).toEqual([{ href: 'http://github.com/', text: 'texto de rutatexto de rutatexto de rutatexto de ru', file: 'C:/Users/Usuario/Desktop/LIM008-fe-md-links/test/index.spec.js'}]);
+  });
 });
 
 describe('getFile', () => {

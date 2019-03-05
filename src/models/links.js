@@ -25,7 +25,7 @@ export const extractATagAttr = (contHTML, pathAbs) => {
   for (let tagA of text) {
     objInfLinks = {
       href: tagA.href,
-      text: tagA.textContent,
+      text: (tagA.textContent).slice(0, 50),
       file: pathAbs
     };
     arrObjInfLinks.push(objInfLinks);

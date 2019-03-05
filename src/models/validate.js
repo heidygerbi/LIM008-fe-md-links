@@ -1,9 +1,12 @@
 export const extractHref = (arrObjInfLinks) => {
-  if (arrObjInfLinks) {
-    const arrHref = ['href1', 'href2', 'href3'];
-    return arrHref;
-  }
+  const arrHref = [];
+  arrObjInfLinks.forEach(element => {
+    arrHref.push(element.href);     
+  });
+  console.log(arrHref);
+  return arrHref;
 };
+
 export const verifyLink = (arrHref) => {
   if (arrHref) {
     const arrStatus = ['status', 'ok'];
