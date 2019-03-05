@@ -73,3 +73,9 @@ Se planteó el siguiente flujo para la función mdLinks
 - Ingresa: Array con informacion de links dentro de objeto o Array con informacion de links y status dentro de objeto (array)
 - Proceso: Calcular total de links, cuantos son unicos, y en caso a que se ingrese array con status de los links entonces calcular tambien los links que están rotos.
 - Salida: Array con estadisticas de total, unique y broken (array)
+
+
+---------------------------
+ Un board con el backlog para la implementación de la librería.
+ Documentación técnica de la librería.
+ Guía de uso e instalación de la librería
