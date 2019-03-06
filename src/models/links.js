@@ -51,12 +51,12 @@ export const getFile = (path) => {
   return result;
 };
 
-  // arrObjAllInfLinks.push(arrObjInfLinks);
-  // const arrObjAllInfLinks = [];
-  // for (let i = 0; i < arrObjInfLinks.length; i++) {
-  //   console.log(`esto es element: ${arrObjInfLinks[i]}`);
-  //   arrObjAllInfLinks.push(arrObjInfLinks[i]);
-  // } 
+// arrObjAllInfLinks.push(arrObjInfLinks);
+// const arrObjAllInfLinks = [];
+// for (let i = 0; i < arrObjInfLinks.length; i++) {
+//   console.log(`esto es element: ${arrObjInfLinks[i]}`);
+//   arrObjAllInfLinks.push(arrObjInfLinks[i]);
+// } 
 
 //   return arrObjAllInfLinks;
 // };
