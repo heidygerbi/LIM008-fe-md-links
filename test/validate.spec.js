@@ -11,7 +11,7 @@ describe('extractHref', () => {
   it('debería retornar un array', () => {
     expect(typeof extractHref([{ href: 'link', text: 'text', file: 'path' }])).toBe('object');
   });
-  it.only('debería retornar un array con todos los links encontrados en el array de objetos', () => {
+  it('debería retornar un array con todos los links encontrados en el array de objetos', () => {
     expect(extractHref(
       [{
         href: 'http://github.com/', 
