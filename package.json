@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "marked": "^0.6.1",
+    "node-fetch": "^2.3.0",
     "whatwg-fetch": "^3.0.0"
   }
 }
