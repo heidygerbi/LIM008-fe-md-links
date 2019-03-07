@@ -37,16 +37,34 @@ describe('extractHref', () => {
   });
 });
 
+describe('verifyLink', () => {
+  it('debería ser una función', () => {
+    expect(typeof verifyLink).toBe('function');
+  });
+  it('debería retornar un array', () => {
+    expect(typeof verifyLink(['href1', 'href2', 'href3'])).toBe('object');
+  });
+  it('debería retornar un array con dos atributos mas a partir de', () => {
+    expect(verifyLink(['href1', 'href2', 'href3'])).toBe('object');
+  });
+});
 
-// describe('verifyLink', () => {
-//   it('debería ser una función', () => {
-//     expect(typeof verifyLink).toBe('function');
-//   });
-//   it('debería retornar un array', () => {
-//     expect(typeof verifyLink(['href1', 'href2', 'href3'])).toBe('object');
-//   });
-// });
-
+test('debería retornar un array de objetos anexando status y value', (done) => {
+  addVerification([{
+    text: 'GitHub',
+    href: 'http://github.com/',
+    file: paths.normalize(`${__dirname}/testDir/a/a1/a1.md`)
+  }]).then((result) => {
+    expect(result).toEqual([{
+      text: 'GitHub',
+      href: 'http://github.com/',
+      file: paths.normalize(`${__dirname}/testDir/a/a1/a1.md`),
+      status: 300,
+      value: OK
+    }]);
+    done();
+  });
+});
 // describe('addVerification', () => {
 //   it('debería ser una función', () => {
 //     expect(typeof addVerification).toBe('function');
