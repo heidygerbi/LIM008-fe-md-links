@@ -15,12 +15,18 @@ import {
 } from '../src/models/validate.js';
 import { calculateStats } from '../src/models/stats.js';
 import { exists, promises } from 'fs';
-export const mdLinks = (path, options) => new promise((resolve, reject)=> {
+export const mdLinks = (path, options) => {
   let pathAbs = path;
   if (!evaluatePath(path)) pathAbs = transformToAbsPath(path);
-  resolve(getArrObjLinks(pathAbs).then());
-});
-const getArrObjLinks = (pathAbs) => new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    if (options === undefined) {
+      getArrObjLinks(pathAbs)
+        .then(response => resolve(response))
+        .catch(console.error);
+    }
+  });
+};
+export const getArrObjLinks = (pathAbs) => new Promise((resolve, reject) => {
   let contHTML = '';
   if (recognizeIfIsFile(pathAbs)) {
     if (validateExtMD(pathAbs)) {
