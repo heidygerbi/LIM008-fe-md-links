@@ -15,6 +15,7 @@ import {
 } from '../src/models/validate.js';
 import { calculateStats } from '../src/models/stats.js';
 import { exists, promises } from 'fs';
+
 export const mdLinks = (path, options) => {
   let pathAbs = path;
   if (!evaluatePath(path)) pathAbs = transformToAbsPath(path);
@@ -31,7 +32,7 @@ export const getArrObjLinks = (pathAbs) => new Promise((resolve, reject) => {
   if (recognizeIfIsFile(pathAbs)) {
     if (validateExtMD(pathAbs)) {
       contHTML = convertMDToHtml(getMDContent(pathAbs));
-      return extractATagAttr(contHTML, pathAbs);
+      resolve(extractATagAttr(contHTML, pathAbs));
     }
   } else {
     let arrLinks = [];
@@ -44,3 +45,4 @@ export const getArrObjLinks = (pathAbs) => new Promise((resolve, reject) => {
     resolve(arrLinks);
   }
 });
+
