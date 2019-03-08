@@ -1,19 +1,21 @@
 import { fetch } from 'node-fetch';
 
-export const extractHref = (arrObjInfLinks) => {
-  const arrHref = [];
-  arrObjInfLinks.forEach(element => {
-    arrHref.push(element.href);     
-  });
-  return arrHref;
-};
+// export const extractHref = (arrObjInfLinks) => {
+//   const arrHref = [];
+//   arrObjInfLinks.forEach(element => {
+//     arrHref.push(element.href);     
+//   });
+//   return arrHref;
+// };
 
-export const verifyLink = (arrHref) => {
+// Esta función queda sin efecto pues se puede pasar el arr de objeto directo
+
+export const verifyLink = (arrObjInfLinks) => {
   // if (arrHref) {
   //   const arrStatus = ['status', 'ok'];
   //   return arrStatus;
   // }
-  return arrHref.forEach(element => {
+  return arrObjInfLinks.forEach(element => {
     fetch(element.href)
       .then(resul => {
         if (resul.status >= 200 && resul.status < 300) {
@@ -30,11 +32,15 @@ export const verifyLink = (arrHref) => {
       });
   });
 };
-export const addVerification = (arrStatus) => new Promise((resolve, reject) => {
-  // if (arrStatus) {
-  //   const arrLinkStatus = ['link', 'status', 'ok'];
-  //   return arrLinkStatus;
-  // }
-  const arrLinkStatus = arrStatus.map(element => verifyLink(element));
-  resolve(Promise.all(arrLinkStatus));
-});
+// http . cats 
+//httpstatus.com
+
+
+// export const addVerification = (objStatus) => new Promise((resolve, reject) => {
+//   // if (arrStatus) {
+//   //   const arrLinkStatus = ['link', 'status', 'ok'];
+//   //   return arrLinkStatus;
+//   // }
+//   const arrLinkStatus = objStatus.map(element => verifyLink(element));
+//   resolve(Promise.all(arrLinkStatus));
+// });
