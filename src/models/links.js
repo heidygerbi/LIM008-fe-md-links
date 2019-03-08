@@ -24,7 +24,7 @@ export const extractATagAttr = (contHTML, pathAbs) => {
   const text = dom.window.document.querySelectorAll('a');
   for (let tagA of text) {
     objInfLinks = {
-      href: tagA.href,
+      href: paths.normalize(tagA.href),
       text: (tagA.textContent).slice(0, 50),
       file: pathAbs
     };
