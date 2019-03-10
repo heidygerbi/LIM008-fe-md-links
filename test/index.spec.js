@@ -10,7 +10,7 @@ const optionValidate = {
 };
 const inputPathAbs = paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md'));
 const inputPathRelative = './test/testDir/a/a1/a1.md';
-// const inputPathAbsDir = paths.normalize(paths.join(__dirname, '/testDir/'));
+const inputPathAbsDir = paths.normalize(paths.join(__dirname, '/testDir/'));
 const inputPathRelativeDir = './test/testDir/';
 const arrOneObjValidate = [{
   text: 'GitHub',
@@ -45,7 +45,7 @@ const arrObj = [
 const output = [
   {
     text: 'GitHub',
-    href: 'https://github.com/',
+    href: 'http://github.com/',
     file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md')),
     status: 200,
     value: 'OK'
@@ -90,22 +90,15 @@ test('Debería retornar un array de objetos a partir de una ruta absoluta de un 
   });
 });
 
-// test('Debería retornar un array de objetos con validaciones a partir de una ruta', (done) => {
-//   getArrObjValidate(inputPathAbs).then((result) => {
-//     expect(result).toEqual(arrOneObjValidate);
-//     done();
-//   });
-// });
+test('Debería retornar un array de objetos con validaciones a partir de una ruta  y opción validate = true', (done) => {
+  mdLinks(inputPathAbsDir, optionValidate).then((result) => {
+    expect(result).toEqual(output);
+    done();
+  });
+});
 
-// test('Debería retornar un array de objetos con validaciones a partir de una ruta  y opción validate = true', (done) => {
-//   mdLinks(inputPathAbs, optionValidate).then((result) => {
-//     expect(result).toEqual(arrOneObjValidate);
-//     done();
-//   });
-// });
-
-test('debería retornar un array de objetos con dos propiedades adicionales por objeto: status y value', (done) => {
-  getArrObjValidate(arrObj)
+test('Debería retornar un array de objetos con dos propiedades adicionales por objeto: status y value', (done) => {
+  getArrObjValidate(inputPathAbsDir)
     .then((res) => {
       expect(res).toEqual(output);
       done();
