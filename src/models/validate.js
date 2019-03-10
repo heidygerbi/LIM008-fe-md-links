@@ -1,18 +1,24 @@
-export const extractHref = (arrObjInfLinks) => {
-  if (arrObjInfLinks) {
-    const arrHref = ['href1', 'href2', 'href3'];
-    return arrHref;
-  }
-};
-export const verifyLink = (arrHref) => {
-  if (arrHref) {
-    const arrStatus = ['status', 'ok'];
-    return arrStatus;
-  }
-};
-export const addVerification = (arrStatus) => {
-  if (arrStatus) {
-    const arrLinkStatus = ['link', 'status', 'ok'];
-    return arrLinkStatus;
-  }
-};
+import fetch from 'node-fetch';
+
+export const updateArrObjLinks = (arrObjInfLinks) => new Promise((resolve) =>
+  resolve(Promise.all(arrObjInfLinks.map((element => verifyLink(element))))));
+
+export const verifyLink = (objInfLink) =>
+  new Promise((resolve) => fetch(objInfLink.href)
+    .then(resul => {
+      if (resul.status >= 200 && resul.status < 400) {
+        objInfLink.status = resul.status;
+        objInfLink.value = 'OK';
+        resolve(objInfLink);
+      } else if (resul.status < 200 || resul.status >= 400) {
+        objInfLink.status = resul.status;
+        objInfLink.value = 'Fail';
+        resolve(objInfLink);
+      }
+    })
+    .catch(err => {
+      objInfLink.status = 404; 
+      // err.code; // err.status
+      objInfLink.value = 'Fail';
+      resolve(objInfLink);
+    }));

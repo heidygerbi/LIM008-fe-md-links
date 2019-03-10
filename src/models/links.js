@@ -1,21 +1,7 @@
 import paths from 'path';
 import fs from 'fs';
-import marked from 'marked';
 import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
-
-export const evaluatePath = (path) => paths.isAbsolute(path);
-
-export const transformToAbsPath = (path) => paths.resolve(path);
-// `${process.cwd(path)}/${paths.basename(path)}`; 
-
-export const recognizeIfIsFile = (pathAbs) => fs.statSync(pathAbs).isFile();
-
-export const validateExtMD = (pathAbs) => paths.extname(pathAbs);
-
-export const getMDContent = (pathAbs) => fs.readFileSync(pathAbs, 'utf8');
-
-export const convertMDToHtml = (contMD) => marked(contMD);
 
 export const extractATagAttr = (contHTML, pathAbs) => {
   const dom = new JSDOM(contHTML);
@@ -25,14 +11,13 @@ export const extractATagAttr = (contHTML, pathAbs) => {
   for (let tagA of text) {
     objInfLinks = {
       href: tagA.href,
-      text: tagA.textContent,
+      text: (tagA.textContent).slice(0, 50),
       file: pathAbs
     };
     arrObjInfLinks.push(objInfLinks);
   }
   return arrObjInfLinks;
 };
-
 
 export const getFile = (path) => {
   let result = [];
@@ -50,13 +35,3 @@ export const getFile = (path) => {
   }
   return result;
 };
-
-  // arrObjAllInfLinks.push(arrObjInfLinks);
-  // const arrObjAllInfLinks = [];
-  // for (let i = 0; i < arrObjInfLinks.length; i++) {
-  //   console.log(`esto es element: ${arrObjInfLinks[i]}`);
-  //   arrObjAllInfLinks.push(arrObjInfLinks[i]);
-  // } 
-
-//   return arrObjAllInfLinks;
-// };

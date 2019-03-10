@@ -1,32 +1,56 @@
-import {
-  extractHref,
-  verifyLink,
-  addVerification
-} from '../src/models/validate.js';
-
-describe('extractHref', () => {
-  it('debería ser una función', () => {
-    expect(typeof extractHref).toBe('function');
-  });
-  it('debería retornar un array', () => {
-    expect(typeof extractHref([{ href: 'link', text: 'text', file: 'path' }])).toBe('object');
-  });
+let paths = require('path');
+import { verifyLink, updateArrObjLinks } from '../src/models/validate.js';
+const inputArrObj = [
+  {
+    text: 'GitHub',
+    href: 'https://github.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md'))
+  },
+  {
+    text: 'GitHub',
+    href: 'http://github11.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md'))
+  },
+  {
+    text: 'GitHub',
+    href: 'http://github11.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/b/a11.md'))
+  }
+];
+const outputArrObj = [
+  {
+    text: 'GitHub',
+    href: 'https://github.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md')),
+    status: 200,
+    value: 'OK'
+  },
+  {
+    text: 'GitHub',
+    href: 'http://github11.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md')),
+    status: 404,
+    value: 'Fail'
+  },
+  {
+    text: 'GitHub',
+    href: 'http://github11.com/',
+    file: paths.normalize(paths.join(__dirname, '/testDir/b/a11.md')),
+    status: 404,
+    value: 'Fail'
+  }
+];
+test('debería retornar un objeto con 2 propiedades extras', (done) => {
+  verifyLink({ text: 'GitHub', href: 'http://github.com/', file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md')) })
+    .then((result) => {
+      expect(result).toEqual({ text: 'GitHub', href: 'http://github.com/', file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md')), status: 200, value: 'OK'});
+      done();
+    });
 });
-
-describe('verifyLink', () => {
-  it('debería ser una función', () => {
-    expect(typeof verifyLink).toBe('function');
-  });
-  it('debería retornar un array', () => {
-    expect(typeof verifyLink(['href1', 'href2', 'href3'])).toBe('object');
-  });
-});
-
-describe('addVerification', () => {
-  it('debería ser una función', () => {
-    expect(typeof addVerification).toBe('function');
-  });
-  it('debería retornar un array', () => {
-    expect(typeof addVerification(['href1', 'href2', 'href3'])).toBe('object');
-  });
+test('debería retornar un array de objetos con dos propiedades adicionales por objeto: status y value', (done) => {
+  updateArrObjLinks(inputArrObj)
+    .then((result) => {
+      expect(result).toEqual(outputArrObj);
+      done();
+    });
 });

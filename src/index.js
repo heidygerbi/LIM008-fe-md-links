@@ -1,37 +1,54 @@
 import {
-  evaluatePath,
-  transformToAbsPath,
-  recognizeIfIsFile,
-  getMDContent,
-  convertMDToHtml,
   extractATagAttr,
-  validateExtMD,
   getFile
 } from './models/links.js';
-import {
-  extractHref,
-  verifyLink,
-  addVerification
-} from '../src/models/validate.js';
+import {updateArrObjLinks} from '../src/models/validate.js';
 import { calculateStats } from '../src/models/stats.js';
-import { exists } from 'fs';
+import { exists, promises } from 'fs';
+import marked from 'marked';
+import paths from 'path';
+import fs from 'fs';
+let options = {
+  validate: false,
+  stats: false,
+};
 export const mdLinks = (path, options) => {
   let pathAbs = path;
+  if (!paths.isAbsolute(path)) pathAbs = paths.resolve(path);
+  return new Promise((resolve) => {
+    if (options === undefined || (!options.validate && !options.stats)) {
+      getArrObjLinks(pathAbs)
+        .then(response => resolve(response))
+        .catch(console.error);
+    } else if (options.validate && !options.stats) {
+      getArrObjValidate(pathAbs)
+        .then(response => resolve(response))
+        .catch(console.error);
+    }
+  });
+};
+export const getArrObjLinks = (pathAbs) => new Promise((resolve) => {
   let contHTML = '';
-  if (!evaluatePath(path)) pathAbs = transformToAbsPath(path);
-  if (recognizeIfIsFile(pathAbs)) {
-    if (validateExtMD(pathAbs)) {
-      contHTML = convertMDToHtml(getMDContent(pathAbs));
-      return extractATagAttr(contHTML, pathAbs);
+  if (fs.statSync(pathAbs).isFile()) {
+    if (paths.extname(pathAbs)) {
+      contHTML = marked(fs.readFileSync(pathAbs, 'utf8'));
+      resolve(extractATagAttr(contHTML, pathAbs));
     }
   } else {
     let arrLinks = [];
     getFile(pathAbs).forEach(element => {
-      if (validateExtMD(element)) {
-        contHTML = convertMDToHtml(getMDContent(element));
+      if (paths.extname(element)) {
+        contHTML = marked(fs.readFileSync(element, 'utf8'));
         arrLinks = arrLinks.concat(extractATagAttr(contHTML, element));
       }
     });
-    return arrLinks;
+    resolve(arrLinks);
   }
-};
+});
+
+export const getArrObjValidate = (pathAbs) => new Promise((resolve) => {
+  console.log(pathAbs);
+  return getArrObjLinks(pathAbs)
+    .then(response => updateArrObjLinks(response))
+    .then(response => resolve(response));
+});
