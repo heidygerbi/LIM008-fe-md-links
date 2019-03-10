@@ -47,11 +47,8 @@ export const getArrObjLinks = (pathAbs) => new Promise((resolve) => {
 });
 
 export const getArrObjValidate = (pathAbs) => new Promise((resolve) => {
-  const arrObjLinks = getArrObjLinks(pathAbs)
-    .then(response => resolve(response))
-    .catch(console.error);
-  const result = updateArrObjLinks(arrObjLinks)
-    .then(response => resolve(response))
-    .catch(console.error);
-  resolve(result);
+  console.log(pathAbs);
+  return getArrObjLinks(pathAbs)
+    .then(response => updateArrObjLinks(response))
+    .then(response => resolve(response));
 });
