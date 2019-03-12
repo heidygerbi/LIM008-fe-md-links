@@ -67,18 +67,10 @@ const output = [
     value: 'Fail'
   }
 ];
-const outputStats = [
-  arrObj,
-  outputGetStats
-];
 const outputGetStats = {
   total: 3,
   unique: 2
 };
-const outputValidateStats = [
-  output,
-  outputGetValidateStats
-];
 const outputGetValidateStats = {
   total: 3,
   unique: 2,
@@ -120,16 +112,16 @@ test('Debería retornar un array de objetos con validaciones a partir de una rut
   });
 });
 
-test('Debería retornar un array[2] 1) array de objetos con validaciones y 2) objeto con estats', (done) => {
+test('Debería retornar un objeto con estats (con validate)', (done) => {
   mdLinks(inputPathAbsDir, optionValidateStats).then((result) => {
-    expect(result).toEqual(outputValidateStats);
+    expect(result).toEqual(outputGetValidateStats);
     done();
   });
 });
 
-test('Debería retornar un array[2] 1) array de objetos sin validaciones y 2) objeto con estats', (done) => {
+test('Debería retornar un objeto con estats (sin validate)', (done) => {
   mdLinks(inputPathAbsDir, optionStats).then((result) => {
-    expect(result).toEqual(outputStats);
+    expect(result).toEqual(outputGetStats);
     done();
   });
 });

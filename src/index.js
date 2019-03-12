@@ -24,19 +24,19 @@ export const mdLinks = (path, options) => {
         .then(response => resolve(response))
         .catch(console.error);
     } else if (options.stats && options.validate) {
-      const arrComplet = [];
-      arrComplet.push(getArrObjValidate(pathAbs));
+      // const arrComplet = [];
+      // arrComplet.push(getArrObjValidate(pathAbs));
       getObjStats(pathAbs, options)
-        .then(response => arrComplet.push(response))
+        .then(response => resolve(response))
         .catch(console.error);
-      resolve(arrComplet);
+      // resolve(arrComplet);
     } else if (options.stats && !options.validate) {
-      const arrComplet = [];
-      arrComplet.push(getArrObjLinks(pathAbs));
+      // const arrComplet = [];
+      // arrComplet.push(getArrObjLinks(pathAbs));
       getObjStats(pathAbs, options)
-        .then(response => arrComplet.push(response))
+        .then(response => resolve(response))
         .catch(console.error);
-      resolve(arrComplet);
+      // resolve(arrComplet);
     }
   });
 };
@@ -75,3 +75,4 @@ export const getObjStats = (pathAbs, options) => new Promise((resolve) => {
       .then(response => resolve(response));
   }
 });
+module.exports = mdLinks;
