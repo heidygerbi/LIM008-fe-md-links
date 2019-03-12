@@ -2,7 +2,7 @@
   "name": "social-network",
   "version": "1.0.0",
   "description": "Social Network @ Laboratoria",
-  "main": "src/index.html",
+  "main": "lib/index.js",
   "keywords": [
     "javascript",
     "npm",
@@ -11,10 +11,12 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "babel src -d lib"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.1.0",
@@ -29,6 +31,6 @@
     "whatwg-fetch": "^3.0.0"
   },
   "bin": {
-    "md-links": "src/cli.js"
+    "md-links": "lib/cli.js"
   }
 }

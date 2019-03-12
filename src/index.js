@@ -3,7 +3,7 @@ import {
   getFile
 } from './models/links.js';
 import {updateArrObjLinks} from '../src/models/validate.js';
-import {calculateStats} from '../src/models/stats.js';
+// import {calculateStats} from '../src/models/stats.js';
 import marked from 'marked';
 import paths from 'path';
 import fs from 'fs';
@@ -23,21 +23,16 @@ export const mdLinks = (path, options) => {
       getArrObjValidate(pathAbs)
         .then(response => resolve(response))
         .catch(console.error);
-    } else if (options.stats && options.validate) {
-      // const arrComplet = [];
-      // arrComplet.push(getArrObjValidate(pathAbs));
-      getObjStats(pathAbs, options)
-        .then(response => resolve(response))
-        .catch(console.error);
-      // resolve(arrComplet);
-    } else if (options.stats && !options.validate) {
-      // const arrComplet = [];
-      // arrComplet.push(getArrObjLinks(pathAbs));
-      getObjStats(pathAbs, options)
-        .then(response => resolve(response))
-        .catch(console.error);
-      // resolve(arrComplet);
-    }
+    } 
+    // else if (options.stats && options.validate) {
+    //    getObjStats(pathAbs, options)
+    //     .then(response => resolve(response))
+    //     .catch(console.error);
+    //  } else if (options.stats && !options.validate) {
+    //    getObjStats(pathAbs, options)
+    //     .then(response => resolve(response))
+    //     .catch(console.error);
+    //  }
   });
 };
 export const getArrObjLinks = (pathAbs) => new Promise((resolve) => {
@@ -64,15 +59,15 @@ export const getArrObjValidate = (pathAbs) => new Promise((resolve) =>
     .then(response => updateArrObjLinks(response))
     .then(response => resolve(response)));
 
-export const getObjStats = (pathAbs, options) => new Promise((resolve) => {
-  if (options.validate) {
-    return getArrObjValidate(pathAbs)
-      .then(response => calculateStats(response))
-      .then(response => resolve(response));
-  } else {
-    return getArrObjLinks(pathAbs)
-      .then(response => calculateStats(response))
-      .then(response => resolve(response));
-  }
-});
+// export const getObjStats = (pathAbs, options) => new Promise((resolve) => {
+//   if (options.validate) {
+//     return getArrObjValidate(pathAbs)
+//       .then(response => calculateStats(response))
+//       .then(response => resolve(response));
+//   } else {
+//     return getArrObjLinks(pathAbs)
+//       .then(response => calculateStats(response))
+//       .then(response => resolve(response));
+//   }
+// });
 module.exports = mdLinks;
