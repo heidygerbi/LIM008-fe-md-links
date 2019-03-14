@@ -1,7 +1,7 @@
 {
-  "name": "social-network",
+  "name": "md-links",
   "version": "1.0.0",
-  "description": "Social Network @ Laboratoria",
+  "description": "Muestra un array con objetos con información de links encontrados a partir de archivo md en determinada ruta dada",
   "main": "lib/index.js",
   "keywords": [
     "javascript",
@@ -36,9 +36,11 @@
   "dependencies": {
     "fs": "0.0.1-security",
     "i": "^0.3.6",
+    "is-valid-path": "^0.1.1",
     "marked": "^0.6.1",
     "node-fetch": "^2.3.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "valid-url": "^1.0.9"
   },
   "bin": {
     "mdLink": "lib/cli.js"
