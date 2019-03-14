@@ -1,4 +1,4 @@
-let paths = require('path');
+import paths from 'path';
 import {
   extractATagAttr,
   getFile

@@ -1,13 +1,49 @@
 # Markdown Links
 
-## Diagrama de flujo
+## ¿Qué hace esta librería?
+
+Md-links es una librería cuya finalidad es mostrar información de los enlaces existentes en archivo MD de una ruta dada (bien sea realativa o absoluta)
+
+## Modo de uso
+
+Existen dos modos de utilizar esta librería:
+1. API: En esta opción podrá instalar la librería e invocar a la función mdLinks().
+Esta función recibe como parametros: path (ruta que desea revisar) y options (un objeto con dos propiedades de tipo booliano, ejemplo: {validate: true, stats: false}).
+IMPORTANTE: En API sólo se ofrece la opción de validar links.
+
+2. CLI: En esta opción podrá instalar la librería y usarla a través de líneas de comando.
+Debo colocar md-links seguido de: path (ruta que desea revisar) y seguido de --validate (si desea el retorno de links validados y/o --stats (si desea estadisticas de total de links encontrados, linksúnicos y (en caso de haber seleccionado --validade) el número de links rotos)
+
+## Instalación
+
+Para instalar esta librería debe seguir los siguientes pasos:
+~~~
+npm install --global <github-heidygerbi>/<github-md-links>
+~~~
+1. En caso de querer utilizarla como API:
+~~~
+import mdLinks from 'github-md-links';
+~~~
+~~~
+mdLinks('path',{validate:true}));
+~~~
+2. En caso de querer utilizarla como CLI:
+~~~
+md-links --validate --stats
+~~~
+
+## ¿Cómo surgió esta librería?
+
+Para el diseño de este librería se realizó un análisis previo, a continuación se muestran los pasos:
+
+### Diagrama de flujo
 
 Se planteó el siguiente flujo para la función mdLinks
 
 ![DFD](https://i.ibb.co/LpjtjLS/DFD.jpg)
 
 
-## Pseudocodigo
+### Pseudocodigo
 
 1.1. evaluatePath 
 - Ingresa: Ruta (string)
@@ -73,9 +109,3 @@ Se planteó el siguiente flujo para la función mdLinks
 - Ingresa: Array con informacion de links dentro de objeto o Array con informacion de links y status dentro de objeto (array)
 - Proceso: Calcular total de links, cuantos son unicos, y en caso a que se ingrese array con status de los links entonces calcular tambien los links que están rotos.
 - Salida: Array con estadisticas de total, unique y broken (array)
-
-
----------------------------
- Un board con el backlog para la implementación de la librería.
- Documentación técnica de la librería.
- Guía de uso e instalación de la librería

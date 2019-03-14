@@ -1,8 +1,8 @@
 {
-  "name": "social-network",
+  "name": "md-links",
   "version": "1.0.0",
-  "description": "Social Network @ Laboratoria",
-  "main": "src/index.html",
+  "description": "Muestra un array con objetos con información de links encontrados a partir de archivo md en determinada ruta dada",
+  "main": "lib/index.js",
   "keywords": [
     "javascript",
     "npm",
@@ -11,10 +11,20 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "babel src -d lib"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/Models/",
+      "/lib/cli.js",
+      "/lib/index.js"
+    ]
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.1.0",
@@ -24,8 +34,15 @@
     "regenerator-runtime": "^0.13.1"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
+    "i": "^0.3.6",
+    "is-valid-path": "^0.1.1",
     "marked": "^0.6.1",
     "node-fetch": "^2.3.0",
-    "whatwg-fetch": "^3.0.0"
+    "path": "^0.12.7",
+    "valid-url": "^1.0.9"
+  },
+  "bin": {
+    "md-links": "lib/cli.js"
   }
 }
