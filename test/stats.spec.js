@@ -1,4 +1,4 @@
-let paths = require('path');
+import paths from 'path';
 import { 
   calculateStats,
   getArrLinksUnique,
@@ -15,21 +15,21 @@ const inputVal = [
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md')),
     status: 404,
     value: 'Fail'
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md')),
     status: 404,
     value: 'Fail'
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/b/a11.md')),
     status: 404,
     value: 'Fail'
@@ -48,17 +48,17 @@ const inputNotVal = [
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md'))
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a11/a11.md'))
   },
   {
     text: 'GitHub',
-    href: 'http://github11.com/',
+    href: 'https://github.com/Laboratoria/LIM008-fe-md-links/src',
     file: paths.normalize(paths.join(__dirname, '/testDir/b/a11.md'))
   }
 ];
@@ -66,7 +66,7 @@ const outputNotVal = {
   total: 4,
   unique: 2
 };
-const outputUnique = ['https://github.com/', 'http://github11.com/'];
+const outputUnique = ['https://github.com/', 'https://github.com/Laboratoria/LIM008-fe-md-links/src'];
 const outputBroken = [404, 404, 404];
 
 describe('calculateStats', () => {

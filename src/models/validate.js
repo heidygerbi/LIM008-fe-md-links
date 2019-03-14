@@ -18,7 +18,6 @@ export const verifyLink = (objInfLink) =>
     })
     .catch(err => {
       objInfLink.status = 404; 
-      // err.code; // err.status
       objInfLink.value = 'Fail';
       resolve(objInfLink);
     }));
