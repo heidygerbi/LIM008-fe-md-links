@@ -12,13 +12,14 @@ export const cli = (args2, args3, args4) => new Promise((resolve) => {
     const resp = mdLinks(args2, { validate: false, stats: false })
       .then(response => resolve(response));
   } else if (isValid(args2) && args3 === '--validate' && !args4) {
-    const resp = mdLinks(args2, { validate: true, stats: false })
-      .then(response => resolve(response));
+    console.log('entra aqui');
+    const resp = (mdLinks(args2, { validate: true, stats: false })
+      .then(response => resolve(response)));
   } else if (isValid(args2) && args3 === '--stats' && !args4) {
     const resp = (mdLinks(args2, { validate: false, stats: true })
       .then(response => resolve(calculateStats(response)))
       .then(response => resolve(response)));
-  } else if ((isValid(args2) && args3 === '--validate' && args4 === '--stats') || (isValid(args2) && args3 === '--validate' && args4 === '--stats')) {
+  } else if ((isValid(args2) && args3 === '--validate' && args4 === '--stats') || (isValid(args2) && args3 === '--stats' && args4 === '--validate')) {
     const resp = (mdLinks(process.argv[2], { validate: true, stats: true })
       .then(response => resolve(calculateStats(response)))
       .then(response => resolve(response)));

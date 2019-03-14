@@ -1,24 +1,6 @@
 import paths from 'path';
-import {
-  mdLinks,
-  getArrObjLinks,
-  getArrObjValidate
-} from '../src/index.js';
-
-const optionValidate = {
-  validate: true,
-  stats: false
-};
-const inputPathAbs = paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md'));
-const inputPathRelative = './test/testDir/a/a1/a1.md';
+import { cli } from '../src/cli.js';
 const inputPathAbsDir = paths.normalize(paths.join(__dirname, '/testDir/'));
-const inputPathRelativeDir = './test/testDir/';
-const arrOneObj = [{
-  text: 'GitHub',
-  href: 'http://github.com/',
-  file: paths.normalize(paths.join(__dirname, '/testDir/a/a1/a1.md'))
-}];
-
 const arrObj = [
   {
     text: 'GitHub',
@@ -36,7 +18,7 @@ const arrObj = [
     file: paths.normalize(paths.join(__dirname, '/testDir/b/a11.md'))
   }
 ];
-const output = [
+const arrObjVal = [
   {
     text: 'GitHub',
     href: 'http://github.com/',
@@ -59,46 +41,48 @@ const output = [
     value: 'Fail'
   }
 ];
+const objStats = {
+  total: 3,
+  unique: 2
+};
+const objStatsVal = {
+  total: 3,
+  unique: 2,
+  broken: 2
+};
 
-test('Debería retornar un array de objetos a partir de una ruta relativa de un archivo', (done) => {
-  mdLinks(inputPathRelative).then((result) => {
-    expect(result).toEqual(arrOneObj);
-    done();
-  });
-});
-
-test('Debería retornar un array de objetos a partir de una ruta absoluta de un archivo', (done) => {
-  mdLinks(inputPathAbs).then((result) => {
-    expect(result).toEqual(arrOneObj);
-    done();
-  });
-});
-
-test('Debería retornar un array de objetos a partir de una ruta relativa de un directorio', (done) => {
-  mdLinks(inputPathRelativeDir).then((result) => {
+test('Debería retornar un array de objetos cuando tiene solo ruta', (done) => {
+  cli(inputPathAbsDir).then((result) => {
     expect(result).toEqual(arrObj);
     done();
   });
 });
 
-test('Debería retornar un array de objetos a partir de una ruta absoluta de un archivo', (done) => {
-  getArrObjLinks(inputPathAbs).then((result) => {
-    expect(result).toEqual(arrOneObj);
+test('Debería retornar un objeto cuando tiene ruta y -- stats', (done) => {
+  cli(inputPathAbsDir, '--stats').then((result) => {
+    expect(result).toEqual(objStats);
     done();
   });
 });
 
-test('Debería retornar un array de objetos con validaciones a partir de una ruta  y opción validate = true', (done) => {
-  mdLinks(inputPathAbsDir, optionValidate).then((result) => {
-    expect(result).toEqual(output);
-    done();
-  });
-});
+// test('Debería retornar un array de objetos cuando tiene ruta y -- validate', (done) => {
+//   cli(inputPathAbsDir, '--validate').then((result) => {
+//     expect(result).toEqual(arrObjVal);
+//     done();
+//   });
+// });
 
-test('Debería retornar un array de objetos con dos propiedades adicionales por objeto: status y value', (done) => {
-  getArrObjValidate(inputPathAbsDir)
-    .then((res) => {
-      expect(res).toEqual(output);
-      done();
-    });
-});
+// test('Debería retornar un objeto cuando tiene ruta, --validate y -- stats', (done) => {
+//   cli(inputPathValStats).then((result) => {
+//     expect(result).toEqual(objStatsVal);
+//     done();
+//   });
+// });
+
+// test('Debería retornar un objeto cuando tiene ruta, --stats y -- validate', (done) => {
+//   cli(inputPathAbsDir, '--stats', '--validate').then((result) => {
+//     expect(result).toEqual(objStatsVal);
+//     done();
+//   });
+// });
+
