@@ -43,6 +43,6 @@
     "valid-url": "^1.0.9"
   },
   "bin": {
-    "mdLink": "lib/cli.js"
+    "md-links": "lib/cli.js"
   }
 }
