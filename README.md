@@ -18,14 +18,15 @@ Debo colocar md-links seguido de: path (ruta que desea revisar) y seguido de --v
 
 Para instalar esta librería debe seguir los siguientes pasos:
 ~~~
-npm install --global <github-heidygerbi>/<github-md-links>
+npm install heidygerbi/md-links
 ~~~
 1. En caso de querer utilizarla como API:
 ~~~
-import mdLinks from 'github-md-links';
+const md = require('md-links');
+md.mdLinks('path');
 ~~~
 ~~~
-mdLinks('path',{validate:true}));
+md.mdLinks('path',{validate:true}));
 ~~~
 2. En caso de querer utilizarla como CLI:
 ~~~
