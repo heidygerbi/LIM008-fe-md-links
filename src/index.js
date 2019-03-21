@@ -25,14 +25,14 @@ export const mdLinks = (path, options) => {
 export const getArrObjLinks = (pathAbs) => new Promise((resolve) => {
   let contHTML = '';
   if (fs.statSync(pathAbs).isFile()) {
-    if (paths.extname(pathAbs)) {
+    if (paths.extname(pathAbs) === '.md' || paths.extname(pathAbs) === '.MD') { // aqui hay que usar funcion para convertir todo a mayuscula o minuscula
       contHTML = marked(fs.readFileSync(pathAbs, 'utf8'));
       resolve(extractATagAttr(contHTML, pathAbs));
     }
   } else {
     let arrLinks = [];
     getFile(pathAbs).forEach(element => {
-      if (paths.extname(element)) {
+      if (paths.extname(element) === '.md' || paths.extname(pathAbs) === '.MD') { // aqui hay que usar funcion para convertir todo a mayuscula o minuscula
         contHTML = marked(fs.readFileSync(element, 'utf8'));
         arrLinks = arrLinks.concat(extractATagAttr(contHTML, element));
       }
