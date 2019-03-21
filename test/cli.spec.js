@@ -65,23 +65,23 @@ test('Debería retornar un objeto cuando tiene ruta y -- stats', (done) => {
   });
 });
 
-// test('Debería retornar un array de objetos cuando tiene ruta y -- validate', (done) => {
-//   cli(inputPathAbsDir, '--validate').then((result) => {
-//     expect(result).toEqual(arrObjVal);
-//     done();
-//   });
-// });
+test('Debería retornar un array de objetos cuando tiene ruta y -- validate', (done) => {
+  cli(inputPathAbsDir, '--validate').then((result) => {
+    expect(result).toEqual(arrObjVal);
+    done();
+  });
+});
 
-// test('Debería retornar un objeto cuando tiene ruta, --validate y -- stats', (done) => {
-//   cli(inputPathValStats).then((result) => {
-//     expect(result).toEqual(objStatsVal);
-//     done();
-//   });
-// });
+test('Debería retornar un objeto cuando tiene ruta, --validate y -- stats', (done) => {
+  cli(inputPathAbsDir, '--validate', '--stats').then((result) => {
+    expect(result).toEqual(objStatsVal);
+    done();
+  });
+});
 
-// test('Debería retornar un objeto cuando tiene ruta, --stats y -- validate', (done) => {
-//   cli(inputPathAbsDir, '--stats', '--validate').then((result) => {
-//     expect(result).toEqual(objStatsVal);
-//     done();
-//   });
-// });
+test('Debería retornar un objeto cuando tiene ruta, --stats y -- validate', (done) => {
+  cli(inputPathAbsDir, '--stats', '--validate').then((result) => {
+    expect(result).toEqual(objStatsVal);
+    done();
+  });
+});
