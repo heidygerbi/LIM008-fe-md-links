@@ -1,5 +1,5 @@
-export const calculateStats = (arrObjLinks) => {
-  if (arrObjLinks[0].status && arrObjLinks[0].value) {
+export const calculateStats = (arrObjLinks, valValuate) => {
+  if (valValuate) {
     const stats = {
       total: arrObjLinks.length,
       unique: getArrLinksUnique(arrObjLinks).length,
